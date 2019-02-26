@@ -40,6 +40,16 @@ router.get("/", (req, res) => {
 	.catch(err => res.status(404).json({ msg: "No Images Found" }));
 });
 
+// @route   GET api/images/author/:id
+// @desc    Get all images from one author
+// @access  Public
+router.get('/author/:id',(req, res) => {
+	Image.find({'author': req.params.id})
+	.then(images => {
+		res.json(images)
+	}).catch(err => res.status(404).json({msg: "No images from this author."}));
+})
+
 // @route   GET api/images/:id
 // @desc    Get image by id
 // @access  public
@@ -91,8 +101,8 @@ router.post(
   }
 );
 
-// @route   POST api/images
-// @desc    Upload Image
+// @route   DELETE api/images
+// @desc    Delete Image
 // @access  private
 router.delete(
   "/:id",
